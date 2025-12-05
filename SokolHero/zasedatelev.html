@@ -12,39 +12,53 @@
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
+            min-height: 100vh;
+            padding-bottom: 50px;
         }
         
         .hero-detail-page {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             border-radius: 15px;
             margin: 20px auto;
             padding: 2rem;
             max-width: 1300px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        /* Стиль для логотипа на странице героя */
+        .hero-page-logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 150px; /* Уменьшенный размер */
+            height: auto;
+            max-width: 100%;
         }
         
         .back-button {
             display: inline-block;
             margin: 20px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: #2c3e50;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            border-radius: 8px;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 10;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
         .back-button:hover {
             background: #34495e;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         
         .bio-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         
         .bio-section h4 {
@@ -61,6 +75,310 @@
             text-align: justify;
         }
         
+        /* Стили для архивных материалов */
+        .archive-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+        
+        .archive-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #9b59b6;
+            padding-bottom: 0.5rem;
+        }
+        
+        .archive-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .tab-button {
+            padding: 12px 24px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: #e9ecef;
+            border-color: #ddd;
+        }
+        
+        .tab-button.active {
+            background: #9b59b6;
+            color: white;
+            border-color: #9b59b6;
+            position: relative;
+        }
+        
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #9b59b6;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .archive-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #e9ecef;
+        }
+        
+        .archive-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .archive-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            transition: transform 0.5s ease;
+        }
+        
+        .archive-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .archive-info {
+            padding: 1.2rem;
+        }
+        
+        .archive-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        
+        .archive-info p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .documents-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .document-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #e9ecef;
+        }
+        
+        .document-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .document-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            transition: transform 0.5s ease;
+        }
+        
+        .document-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .document-info {
+            padding: 1.2rem;
+        }
+        
+        .document-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .document-info p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+        
+        /* Модальное окно для увеличения изображения */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .image-modal.active {
+            display: flex;
+        }
+        
+        .image-modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-image-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        
+        #modalImage {
+            width: 100%;
+            height: auto;
+            max-height: 85vh;
+            object-fit: contain;
+            display: block;
+            transform-origin: center center;
+            transition: transform 0.1s ease;
+            cursor: grab;
+        }
+        
+        #modalImage.dragging {
+            cursor: grabbing;
+        }
+        
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+            transition: color 0.3s ease;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-modal-close:hover {
+            color: #e74c3c;
+            background: rgba(0,0,0,0.7);
+        }
+        
+        .image-modal-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.4;
+            z-index: 2001;
+        }
+        
+        .modal-controls {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 2001;
+        }
+        
+        .modal-btn {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            background: rgba(0,0,0,0.9);
+            transform: scale(1.1);
+        }
+        
+        .zoom-info {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 2001;
+        }
+        
         @media (max-width: 768px) {
             body {
                 background-attachment: scroll;
@@ -70,6 +388,38 @@
                 margin: 10px;
                 padding: 1.5rem;
             }
+            
+            .gallery-grid,
+            .documents-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .tab-button {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .modal-controls {
+                bottom: 80px;
+            }
+            
+            .modal-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .zoom-info {
+                top: 70px;
+                left: 20px;
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+
+            .hero-page-logo {
+                width: 100px; /* Уменьшение логотипа на мобильных */
+            }
         }
     </style>
 </head>
@@ -77,6 +427,8 @@
     <a href="../index.html" class="back-button">← Назад к списку героев</a>
     
     <div class="hero-detail-page">
+        <img src="../images/logo.png" alt="Логотип сайта" class="hero-page-logo">
+
         <div class="hero-detail">
             <div class="hero-left">
                 <div class="hero-photo">
@@ -154,8 +506,240 @@
                         <span>Вологодская область, г. Сокол, ул. Советская 55А</span>
                     </div>
                 </div>
+                
+                <div class="archive-section">
+                    <h3>Архивные материалы</h3>
+                    
+                    <div class="archive-tabs">
+                        <button class="tab-button active" data-tab="photos">Фотографии</button>
+                        <button class="tab-button" data-tab="documents">Документы</button>
+                    </div>
+                    
+                    <div id="photos" class="tab-content active">
+                        <div class="gallery-grid">
+                            <div class="archive-item" data-image="../images/archive/zasedatelev/Zasedatelev3.jpg" 
+                                 data-title="Фото В.В. Заседателева в военные годы" 
+                                 data-description="Вячеслав Васильевич Заседателев в первый год службы (1942 г.)">
+                                <img src="../images/archive/zasedatelev/Zasedatelev3.jpg" alt="Фото В.В. Заседателева в военные годы">
+                                <div class="archive-info">
+                                    <h4>Фото В.В. Заседателева в военные годы</h4>
+                                    <p>Вячеслав Васильевич Заседателев в первый год службы (1942 г.)</p>
+                                </div>
+                            </div>
+
+                            <div class="archive-item" data-image="../images/archive/zasedatelev/Zasedatelev1.jpg" 
+                                 data-title="Фото В.В. Заседателева в военные годы" 
+                                 data-description="Вячеслав Васильевич Заседателев после форсирования Днепра (Сентябрь 1943 г.)">
+                                <img src="../images/archive/zasedatelev/Zasedatelev1.jpg" alt="Фото В.В. Заседателева в военные годы">
+                                <div class="archive-info">
+                                    <h4>Фото В.В. Заседателева в военные годы</h4>
+                                    <p>Вячеслав Васильевич Заседателев после форсирования Днепра (Сентябрь 1943 г.)</p>
+                                </div>
+                            </div>
+
+                            <div class="archive-item" data-image="../images/archive/zasedatelev/Zasedatelev2.jpg" 
+                                 data-title="В.В.Заседателев в послевоенные годы" 
+                                 data-description="Вячеслав Васильевич Заседателев 1950-е годы">
+                                <img src="../images/archive/zasedatelev/Zasedatelev2.jpg" alt="Фото В.В. Заседателева в военные годы">
+                                <div class="archive-info">
+                                    <h4>В.В.Заседателев в послевоенные годы</h4>
+                                    <p>Вячеслав Васильевич Заседателев 1950-е годы</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="documents" class="tab-content">
+                        <div class="documents-list">
+                            <div class="document-item" data-image="../images/archive/zasedatelev/Prikaz.jpg" 
+                                 data-title="Наградной лист В.В. Заседателева" 
+                                 data-description="Наградной лист Вячеслава Васильевича Заседателева">
+                                <img src="../images/archive/zasedatelev/Prikaz.jpg" alt="Наградной лист В.В. Заседателева">
+                                <div class="document-info">
+                                    <h4>Наградной лист В.В. Заседателева</h4>
+                                    <p>Наградной лист Вячеслава Васильевича Заседателева</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-close" id="modalClose">&times;</div>
+        <div class="zoom-info" id="zoomInfo">Масштаб: 100%</div>
+        <div class="image-modal-content">
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="">
+            </div>
+        </div>
+        <div class="image-modal-caption" id="modalCaption"></div>
+        <div class="modal-controls">
+            <button class="modal-btn" id="zoomOut" title="Уменьшить">-</button>
+            <button class="modal-btn" id="resetZoom" title="Сбросить">⟲</button>
+            <button class="modal-btn" id="zoomIn" title="Увеличить">+</button>
+        </div>
+    </div>
+
+    <script>
+        // Управление вкладками
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Переменные для управления модальным окном
+        let currentScale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const zoomInfo = document.getElementById('zoomInfo');
+
+        // Открытие модального окна при клике на фото или документ
+        document.querySelectorAll('.archive-item, .document-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const imageSrc = item.getAttribute('data-image');
+                const title = item.getAttribute('data-title');
+                const description = item.getAttribute('data-description');
+                
+                modalImage.src = imageSrc;
+                modalCaption.textContent = `${title} - ${description}`;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Сброс трансформаций
+                currentScale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateImageTransform();
+                updateZoomInfo();
+            });
+        });
+
+        // Закрытие модального окна
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Закрытие по клавише ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Управление масштабом
+        document.getElementById('zoomIn').addEventListener('click', () => {
+            currentScale = Math.min(currentScale + 0.2, 3);
+            updateImageTransform();
+            updateZoomInfo();
+        });
+
+        document.getElementById('zoomOut').addEventListener('click', () => {
+            currentScale = Math.max(currentScale - 0.2, 0.5);
+            updateImageTransform();
+            updateZoomInfo();
+        });
+
+        document.getElementById('resetZoom').addEventListener('click', () => {
+            currentScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+            updateZoomInfo();
+        });
+
+        // Зум колесиком мыши
+        modalImage.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            const newScale = Math.min(Math.max(currentScale + delta, 0.5), 3);
+            
+            // Масштабирование относительно курсора
+            const rect = modalImage.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const scaleChange = newScale / currentScale;
+            
+            translateX = x - (x - translateX) * scaleChange;
+            translateY = y - (y - translateY) * scaleChange;
+            
+            currentScale = newScale;
+            updateImageTransform();
+            updateZoomInfo();
+        });
+
+        // Перетаскивание изображения
+        modalImage.addEventListener('mousedown', startDragging);
+        modalImage.addEventListener('touchstart', startDraggingTouch);
+
+        function startDragging(e) {
+            isDragging = true;
+            modalImage.classList.add('dragging');
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            e.preventDefault();
+        }
+
+        function startDraggingTouch(e) {
+            isDragging = true;
+            modalImage.classList.add('dragging');
+            startX = e.touches[0].clientX - translateX;
+            startY = e.touches[0].clientY - translateY;
+            e.preventDefault();
+        }
+
+        document.addEventListener('mousemove', dragImage);
+        document.addEventListener('touchmove', dragImageTouch);
+
+        function dragImage(e) {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateImageTransform();
+        }
+
+        function dragImageTouch(e) {
+            if (!isDragging) return;
+            translateX = e.touches[0].clientX - startX;
+            translateY = e.touches[0].clientY - startY;
+            updateImageTransform();
+        }
+
+        document.addEventListener('mouseup', stopDragging);
+        document.addEventListener('touchend', stopDragging);
+
+        function stopDragging() {
+            isDragging = false;
+            modalImage.classList.remove('dragging');
+        }
+
+        function updateImageTransform() {
+            modalImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+        }
+
+        function updateZoomInfo() {
+            zoomInfo.textContent = `Масштаб: ${Math.round(currentScale * 100)}%`;
+        }
+    </script>
 </body>
 </html>
