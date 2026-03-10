@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить героя - Архив Героев Сокольской земли</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #e74c3c;
+        }
+        
+        .info-text {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: #555;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .file-hint {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <a href="index.html" class="back-link">← Вернуться на главную</a>
+        <h1 class="page-title">Добавить информацию о герое</h1>
+        
+        <div class="info-text">
+            Заполните форму, чтобы предложить информацию о вашем герое. 
+            Все данные будут проверены и после согласования добавлены на сайт разработчиком.
+        </div>
+        
+        <form id="addHeroForm">
+            <div class="form-group">
+                <label for="heroName">ФИО героя *</label>
+                <input type="text" id="heroName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="birthDeath">Годы жизни *</label>
+                <input type="text" id="birthDeath" placeholder="например: 14.03.1923-27.02.1996" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="rank">Звание *</label>
+                <input type="text" id="rank" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="biography">Биография и подвиг *</label>
+                <textarea id="biography" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="address">Адрес (памятная доска, улица и т.д.)</label>
+                <input type="text" id="address">
+            </div>
+            
+            <div class="form-group">
+                <label for="awards">Награды (перечислите через запятую)</label>
+                <input type="text" id="awards">
+            </div>
+            
+            <div class="form-group">
+                <label for="photos">Фотографии (можно приложить ссылки)</label>
+                <textarea id="photos"></textarea>
+                <div class="file-hint">Укажите ссылки на Яндекс.Диск, Google Диск или другие облачные хранилища</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="documents">Документы (можно приложить ссылки)</label>
+                <textarea id="documents"></textarea>
+                <div class="file-hint">Укажите ссылки на Яндекс.Диск, Google Диск или другие облачные хранилища</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="contactInfo">Ваши контактные данные для связи *</label>
+                <input type="text" id="contactInfo" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Отправить на согласование</button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('addHeroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за предложение! Информация о герое отправлена на проверку разработчику.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

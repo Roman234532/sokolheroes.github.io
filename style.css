@@ -21,8 +21,8 @@
 /* Стили для логотипа на главной странице */
 .site-logo {
     display: block;
-    margin: 0 auto 1.5rem; /* Выше текста и отступ снизу */
-    width: 200px; /* Негромадный размер */
+    margin: 0 auto 1.5rem;
+    width: 200px;
     height: auto;
     max-width: 100%;
 }
@@ -543,6 +543,195 @@ header {
         padding-left: 1rem;
     }
 
+.archive-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
+}
+
+/* Стили для поиска */
+.search-container {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.search-container.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 300px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #e74c3c;
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.2);
+}
+
+.search-results {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1001;
+}
+
+.search-results.active {
+    display: block;
+}
+
+.search-result-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    transform: translateX(5px);
+}
+
+.search-result-item.no-results {
+    cursor: default;
+    color: #7f8c8d;
+    text-align: center;
+}
+
+.search-result-item.no-results:hover {
+    background: white;
+    transform: none;
+}
+
+.search-result-name {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.search-result-rank {
+    font-size: 12px;
+    color: #e74c3c;
+}
+
+/* Стили для кнопки меню */
+.menu-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-button.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Стили для панели меню */
+.menu-panel {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    min-width: 250px;
+}
+
+.menu-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.menu-panel-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item {
+    padding: 15px 25px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item:hover {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #e74c3c;
+    padding-left: 30px;
+}
+
+/* Адаптивность */
 @media (max-width: 1024px) {
     .hero-detail {
         grid-template-columns: 1fr;
@@ -604,47 +793,45 @@ header {
     }
 
     .archive-badge {
-        display: inline-block;
-        background: #9b59b6;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 15px;
+        padding: 6px 12px;
         font-size: 0.8rem;
         margin-top: 10px;
     }
 
-    .hero-card .hero-card-content {
-        position: relative;
+    .site-logo {
+        width: 100px;
     }
 
-    .archive-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, #9b59b6, #8e44ad);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        margin-top: 15px;
-        font-weight: 500;
-        box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
+    .search-wrapper {
+        width: 200px;
     }
-
-    /* Для отзывчивости архивного бейджа на мобильных */
-    @media (max-width: 768px) {
-        .archive-badge {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            margin-top: 10px;
-        }
-
-        .site-logo {
-            width: 100px;
-        }
+    
+    .search-container {
+        top: 10px;
+        right: 70px;
     }
-
-    /* Улучшение для карточек героев на главной */
-    .hero-card .hero-card-content {
-        position: relative;
-        padding-bottom: 20px;
+    
+    .search-input {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .menu-button {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+    
+    .menu-panel {
+        top: 65px;
+        right: 10px;
+        min-width: 220px;
+    }
+    
+    .menu-item {
+        padding: 12px 20px;
+        font-size: 14px;
     }
 }

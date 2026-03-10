@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта QR-кодов - Архив Героев Сокольской земли</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #e74c3c;
+        }
+        
+        .info-text {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: #555;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        #map {
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .map-legend {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-marker {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .legend-marker.hero {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .legend-marker.memorial {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .map-instructions {
+            margin-left: auto;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        /* Стили для балуна (всплывающей подсказки) */
+        .balloon-content {
+            max-width: 250px;
+        }
+        
+        .balloon-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .balloon-rank {
+            font-size: 14px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .balloon-address {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .balloon-photo {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .balloon-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        .balloon-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <a href="index.html" class="back-link">← Вернуться на главную</a>
+        <h1 class="page-title">Карта QR-кодов</h1>
+        
+        <div class="info-text">
+            <p>При наведении на метку отображается подсказка с именем и статусом героя. Клик по метке открывает подробное окно, из которого можно перейти на персональную страницу героя. Там собраны биография, награды, архивные фотографии и документы.</p>
+        </div>
+        
+        <!-- Контейнер для карты -->
+        <div id="map"></div>
+        
+        <!-- Легенда карты -->
+        <div class="map-legend">
+            <div class="legend-item">
+                <div class="legend-marker hero"></div>
+                <span>Памятные таблички героев</span>
+            </div>
+            <div class="map-instructions">
+                <span>🖱️ Клик по метке - подробнее | Наведение - предпросмотр</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Подключаем API Яндекс.Карт -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=5c6318e6-b515-4d12-b79b-b1e92c5b9510&lang=ru_RU" type="text/javascript"></script>
+    
+    <script>
+        // Данные для карты (герои с адресами и статусами)
+        const mapMarkers = [
+            {
+                id: 1,
+                name: "Вячеслав Васильевич Заседателев",
+                rank: "Герой Советского Союза, полковник",
+                coords: [59.461038, 40.116196], // ул. Советская, 55А
+                address: "ул. Советская, 55А, г. Сокол",
+                type: "hero",
+                image: "images/Вячеслав_Васильевич_Заседателев1.jpg",
+                slug: "zasedatelev"
+            },
+            {
+                id: 2,
+                name: "Сергей Павлович Басков",
+                rank: "Герой Советского Союза, майор",
+                coords: [59.455966, 40.141092], // СЦБК
+                address: "Сокольский целлюлозно-бумажный комбинат",
+                type: "hero",
+                image: "images/archive/baskov/baskov1.jpg",
+                slug: "baskov"
+            },
+            {
+                id: 3,
+                name: "Николай Васильевич Мамонов",
+                rank: "Герой Советского Союза, подполковник",
+                coords: [59.447092, 40.136590], // ул. Мамонова, 14
+                address: "ул. Мамонова, 14, г. Сокол",
+                type: "hero",
+                image: "images/archive/mamonov/mamonov1.jpg",
+                slug: "mamonov"
+            },
+            {
+                id: 4,
+                name: "Сергей Николаевич Орешков",
+                rank: "Герой Советского Союза, младший лейтенант",
+                coords: [59.463859, 40.117885], // ул. Орешкова, 8
+                address: "ул. Орешкова, 8, г. Сокол",
+                type: "hero",
+                image: "images/archive/oreshkov/oreshkov1.jpg",
+                slug: "oreshkov"
+            },
+            {
+                id: 5,
+                name: "Павел Федорович Поросенков",
+                rank: "Герой Советского Союза, лейтенант",
+                coords: [59.458087, 40.136162], // ул. Горького, 15
+                address: "ул. Горького, 15, г. Сокол",
+                type: "hero",
+                image: "images/archive/porosenkov/porosenkov1.jpg",
+                slug: "porosenkov"
+            },
+            {
+                id: 6,
+                name: "Юрий Григорьевич Лагунов",
+                rank: "Старший лейтенант милиции, участник Чеченской войны, награждён орденом Мужества (посмертно)",
+                coords: [59.463368, 40.087428], // ул. Менделеева, 37А
+                address: "ул. Менделеева, 37А, г. Сокол",
+                type: "hero",
+                image: "images/archive/lagunov/lagunov1.jpg",
+                slug: "lagunov"
+            },
+            {
+                id: 7,
+                name: "Евгений Игоревич Ворочалкин",
+                rank: "Рядовой, участник Афганской войны, награждён орденом Красной Звезды (посмертно)",
+                coords: [59.469645, 40.102922], // ул. Советская, 86
+                address: "ул. Советская, д. 86, г. Сокол",
+                type: "hero",
+                image: "images/archive/vorochalkin/vorochalkin1.jpg",
+                slug: "vorochalkin"
+            },
+            {
+                id: 8,
+                name: "Владимир Николаевич Изюмов",
+                rank: "Рядовой, участник Второй чеченской войны, награждён Орденом Мужества (посмертно).",
+                coords: [59.460999, 40.083906], // ул. Производственная 9
+                address: "ул. Производственная, 9, г. Сокол",
+                type: "hero",
+                image: "images/archive/izyumov/izyumov1.jpg",
+                slug: "izyumov"
+            },
+			{
+                id: 9,
+                name: "Евгений Сергеевич Филатов",
+                rank: "Сержант, участник боевых действий в Сирийской Арабской Республике, награждён Орденом Мужества (посмертно).",
+                coords: [59.445613, 40.136584], // ул. Калинина 21
+                address: "ул. Калинина, 21, г. Сокол",
+                type: "hero",
+                image: "images/archive/filatov/filatov1.jpg",
+                slug: "filatov"
+            }
+        ];
+
+        ymaps.ready(initMap);
+
+        function initMap() {
+            // Создаем карту с центром в Соколе
+            const map = new ymaps.Map('map', {
+                center: [59.4625, 40.1200], // Координаты центра Сокола
+                zoom: 13,
+                controls: ['zoomControl', 'fullscreenControl', 'geolocationControl']
+            });
+
+            // Создаем кластеризатор для группировки меток
+            const clusterer = new ymaps.Clusterer({
+                clusterDisableClickZoom: false,
+                clusterOpenBalloonOnClick: false,
+                clusterBalloonContentLayout: 'cluster#balloonTwoColumns',
+                clusterBalloonItemContentLayout: 'cluster#balloonTwoColumnsItemContent',
+                clusterBalloonPanelMaxMapArea: 0,
+                clusterHideIconOnBalloonOpen: false,
+                geoObjectHideIconOnBalloonOpen: false,
+                gridSize: 64
+            });
+
+            // Массив для хранения всех меток
+            const placemarks = [];
+
+            // Создаем метки для каждого объекта
+            mapMarkers.forEach(marker => {
+                // Определяем цвет метки (все красные для единообразия)
+                const preset = 'islands#redIcon';
+
+                // Создаем контент для балуна (всплывающей подсказки)
+                const balloonContent = `
+                    <div class="balloon-content">
+                        ${marker.image ? `<img src="${marker.image}" alt="${marker.name}" class="balloon-photo" onerror="this.style.display='none'">` : ''}
+                        <div class="balloon-title">${marker.name}</div>
+                        <div class="balloon-rank">${marker.rank}</div>
+                        <div class="balloon-address">${marker.address}</div>
+                        <a href="SokolHero/${marker.slug}.html" class="balloon-link" target="_blank">Перейти к странице героя</a>
+                    </div>
+                `;
+
+                // Создаем метку
+                const placemark = new ymaps.Placemark(
+                    marker.coords,
+                    {
+                        name: marker.name,
+                        balloonContent: balloonContent,
+                        hintContent: `${marker.name} — ${marker.rank}` // Текст при наведении
+                    },
+                    {
+                        preset: preset,
+                        iconColor: '#e74c3c',
+                        balloonPanelMaxMapArea: 0,
+                        hideIconOnBalloonOpen: false,
+                        balloonCloseButton: true,
+                        balloonOffset: [3, -40]
+                    }
+                );
+
+                placemarks.push(placemark);
+            });
+
+            // Добавляем все метки в кластеризатор
+            clusterer.add(placemarks);
+            
+            // Добавляем кластеризатор на карту
+            map.geoObjects.add(clusterer);
+
+            // Центрируем карту по всем меткам
+            if (placemarks.length > 0) {
+                const bounds = clusterer.getBounds();
+                if (bounds) {
+                    map.setBounds(bounds, {
+                        checkZoomRange: true,
+                        zoomMargin: 50
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
